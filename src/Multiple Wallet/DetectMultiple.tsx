@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useSyncProviders } from './useSyncProviders'
-import { formatBalance, formatChainAsNum } from './utils'
+import { formatBalance, formatChainAsNum } from '../utils'
 import detectEthereumProvider from "@metamask/detect-provider";
 
 interface EIP6963ProviderDetail {

@@ -1,5 +1,5 @@
 import "./App.css";
-import DetectMultiple from "./DetectMultiple";
+import DetectMultiple from "./Multiple Wallet/DetectMultiple";
 // import MetaMask from "./MetaMask";
 
 const App = () => {
