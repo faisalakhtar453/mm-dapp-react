@@ -1,6 +1,6 @@
-import "./App.css";
+import "../App.css";
 import { useState, useEffect } from "react";
-import { formatBalance, formatChainAsNum } from "./utils";
+import { formatBalance, formatChainAsNum } from "../utils";
 import detectEthereumProvider from "@metamask/detect-provider";
 
 const MetaMask = () => {
@@ -8,16 +8,15 @@ const MetaMask = () => {
     const initialState = { accounts: [], balance: "", chainId: "" };
     const [wallet, setWallet] = useState(initialState);
 
-    const [isConnecting, setIsConnecting] = useState(false);  /* New */
-    const [error, setError] = useState(false);                /* New */
-    const [errorMessage, setErrorMessage] = useState("");     /* New */
+    const [isConnecting, setIsConnecting] = useState(false);
+    const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
         const refreshAccounts = (accounts: any) => {
             if (accounts.length > 0) {
                 updateWallet(accounts);
             } else {
-                // if length 0, user is disconnected
                 setWallet(initialState);
             }
         };
@@ -61,21 +60,21 @@ const MetaMask = () => {
         setWallet({ accounts, balance, chainId });
     };
 
-    const handleConnect = async () => {                    /* Updated */
-        setIsConnecting(true);                             /* New */
+    const handleConnect = async () => {
+        setIsConnecting(true);
         await window.ethereum
-            .request({                                     /* Updated */
+            .request({
                 method: "eth_requestAccounts",
             })
-            .then((accounts: []) => {                       /* New */
-                setError(false);                            /* New */
-                updateWallet(accounts);                     /* New */
-            })                                              /* New */
-            .catch((err: any) => {                          /* New */
-                setError(true);                             /* New */
-                setErrorMessage(err.message);               /* New */
-            });                                             /* New */
-        setIsConnecting(false);                             /* New */
+            .then((accounts: []) => {
+                setError(false);
+                updateWallet(accounts);
+            })
+            .catch((err: any) => {
+                setError(true);
+                setErrorMessage(err.message);
+            });
+        setIsConnecting(false);
     };
 
     const disableConnect = Boolean(wallet) && isConnecting;
