@@ -19,10 +19,8 @@ export default function DetectMultiple() {
     const [hasProvider, setHasProvider] = useState<boolean | null>(null);
     const initialState = { accounts: [], balance: "", chainId: "" };
     const [wallet, setWallet] = useState(initialState);
-    const [isConnecting, setIsConnecting] = useState(false);  /* New */
-    // const [isdisConnect, setIsdisConnect] = useState(false);  /* New */
-    // const [error, setError] = useState(false);                /* New */
-    // const [errorMessage, setErrorMessage] = useState("");     /* New */
+    const [isConnecting, setIsConnecting] = useState(false);
+    const [isdisConnect, setIsdisConnect] = useState(false);
 
     const [triggerEffect, setTriggerEffect] = useState(false);
 
@@ -46,7 +44,6 @@ export default function DetectMultiple() {
             if (accounts.length > 0) {
                 updateWallet(accounts);
             } else {
-                // if length 0, user is disconnected
                 setWallet(initialState);
             }
         };
@@ -69,9 +66,9 @@ export default function DetectMultiple() {
             }
         };
 
-        if (triggerEffect) { // Check if the trigger is true
+        if (triggerEffect) {
             getProvider();
-            setTriggerEffect(false); // Reset the trigger after useEffect is called
+            setTriggerEffect(false);
         }
         return () => {
             window.ethereum?.removeListener("accountsChanged", refreshAccounts);
@@ -100,12 +97,16 @@ export default function DetectMultiple() {
                 },
             ],
         });
+        setIsdisConnect(true)
     }
     return (
         <>
-            <h2>Wallets Detected:</h2>
-            {!userAccount && (
+            {/* <div>
+                Injected Provider {hasProvider ? "DOES" : "DOES NOT"} Exist
+            </div> */}
+            {(!userAccount && isdisConnect == false) || isdisConnect == true ? (
                 <div style={{ display: 'flex', flexDirection: "column" }}>
+                    <h2>Wallets Detected:</h2>
                     {providers.length > 0 ? providers?.map((provider: EIP6963ProviderDetail) => (
                         <button key={provider.info.uuid} onClick={() => handleConnect(provider)} >
                             <img src={provider.info.icon} alt={provider.info.name} />
@@ -116,11 +117,11 @@ export default function DetectMultiple() {
                             there are no Announced Providers
                         </div>}
                 </div>
-            )}
+            ) : ''}
 
             <hr />
             <h2>{userAccount ? "" : "No "}Wallet Selected</h2>
-            {userAccount &&
+            {isdisConnect == false && userAccount ?
                 (
                     <div>
                         <div>
@@ -134,7 +135,7 @@ export default function DetectMultiple() {
                         </div>
                         <button onClick={disconnect}>Disconnect</button>
                     </div>
-                )
+                ) : ''
             }
         </>
     )
