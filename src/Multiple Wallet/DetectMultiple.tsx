@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useSyncProviders } from './useSyncProviders'
-import { formatBalance, formatChainAsNum } from '../utils'
+import { formatAddress, formatBalance, formatChainAsNum } from '../utils'
 import detectEthereumProvider from "@metamask/detect-provider";
 
 interface EIP6963ProviderDetail {
@@ -127,7 +127,7 @@ export default function DetectMultiple() {
                         <div>
                             <img src={selectedWallet!.info.icon} alt={selectedWallet!.info.name} />
                             <div>{selectedWallet!.info.name}</div>
-                            {/* <div>({formatAddress(userAccount)})</div> */}
+                            <div>userAccount Formatted:({formatAddress(userAccount)})</div>
                             <div>{userAccount}</div>
                             <div>Wallet Balance: {wallet.balance}</div>
                             <div>Hex ChainId: {wallet.chainId}</div>
